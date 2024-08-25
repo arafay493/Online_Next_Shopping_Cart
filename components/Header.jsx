@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import CartSection from "./CartSection";
 import { useSelector } from "react-redux";
+import dynamic from "next/dynamic";
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const cart_items = useSelector((state) => state.cart.cartItems);
@@ -11,9 +12,9 @@ const Header = () => {
     <>
       <header className="absolute w-full px-5 md:px-10 py-5 z-20">
         <div className="flex justify-between items-center p-3 bg-[#DA0037]/50 text-white rounded-lg">
-          <Link href={"/"} className="flex items-center gap-2">
+          <Link href={"/"} className="text-xl md:text-2xl flex items-center gap-2">
             <Image src="/images/logo.png" width={40} height={40} alt="Logo" />
-            <h2 className="text-xl md:text-2xl">NC</h2>
+            NC
           </Link>
           <button
             className="cart_btn bg-[#C57B8C] hover:bg-[#f095aa] relative"
@@ -38,5 +39,5 @@ const Header = () => {
     </>
   );
 };
-
-export default Header;
+export default dynamic (() => Promise.resolve(Header), {ssr: false})
+// export default Header;

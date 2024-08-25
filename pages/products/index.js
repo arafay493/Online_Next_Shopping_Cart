@@ -135,11 +135,15 @@ const products = () => {
       transition={{ ease: "easeInOut", duration: 1 }}
     >
       <div className="flex justify-between items-center">
-        <Link href={"/"} className=" w-fit px-3 py-1 rounded-sm btn">
+        {/* <Link href={"/"} className=" w-fit px-3 py-1 rounded-sm btn">
           <div className="flex items-center gap-2">
             <MdOutlineKeyboardBackspace />
             <button>back</button>
           </div>
+        </Link> */}
+        <Link href={"/"} className="flex items-center gap-2 w-fit px-3 py-1 rounded-sm btn">
+            <MdOutlineKeyboardBackspace />
+            back
         </Link>
         <div className="border-2 border-[#DA0037] px-2 py-1 text">
           <input

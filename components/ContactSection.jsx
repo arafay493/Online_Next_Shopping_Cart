@@ -25,11 +25,8 @@ const ContactSection = () => {
             voluptatem consectetur eaque. Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Ipsum, error.
           </p>
-          <Link href={"/contact"}>
-            <button className="btn">
-              {" "}
+          <Link href={"/contact"} className="btn">
               Info <BsArrowRight />
-            </button>
           </Link>
         </div>
       </motion.div>

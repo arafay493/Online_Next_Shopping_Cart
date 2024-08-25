@@ -5,14 +5,14 @@ import { store } from "@/toolkit_store/store";
 import { Provider } from "react-redux";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 // import { ReactQueryDevtools } from 'react-query/devtools'
 
 // Create a client
-const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }) {
+  const queryClient = new QueryClient();
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -25,3 +25,4 @@ export default function App({ Component, pageProps }) {
     </Provider>
   );
 }
+

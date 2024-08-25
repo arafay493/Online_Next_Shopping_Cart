@@ -22,8 +22,8 @@ const Banner = () => {
             commodi corrupti, inventore velit sunt cupiditate reprehenderit
             asperiores?
           </p>
-          <Link href={"/products"}>
-            <button className="btn">Products</button>
+          <Link href={"/products"} className="btn">
+            Products
           </Link>
         </motion.div>
       </div>

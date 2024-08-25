@@ -9,33 +9,41 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { ClipLoader } from "react-spinners";
+import CryptoJS from "crypto-js";
 
 const singleProduct = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
   const [showSlide, setShowSlide] = useState();
   const productId = router.query.singleProduct;
 
+  // URL-safe decode the encoded data
+  let dycryptedData;
+  let dycryptedId;
+  if (productId) {
+    const urlSafeDecoded = productId.replace(/-/g, "+").replace(/_/g, "/");
+    const encryptedNumberDecoded = atob(urlSafeDecoded);
+    dycryptedData = CryptoJS.AES.decrypt(
+      encryptedNumberDecoded,
+      process.env.NEXT_PUBLIC_SECRET_KEY
+    );
+    dycryptedId = dycryptedData.toString(CryptoJS.enc.Utf8);
+  }
+
   const fetchProduct = async () => {
-    const res = await axios.get(`https://dummyjson.com/products/${productId}`);
+    const res = await axios.get(
+      `https://dummyjson.com/products/${dycryptedId}`
+    );
     return res.data;
   };
 
-  const { data, isError, error, isLoading, isFetching } = useQuery(
+  const { data, isError, error, isLoading } = useQuery(
     "product",
     fetchProduct,
     {
       enabled: !!productId,
     }
   );
-
-  if (isFetching) {
-    return (
-      <div className="h-screen w-screen flex justify-center items-center">
-        <ClipLoader color="#DA0037" size={100} speedMultiplier={1} />
-      </div>
-    );
-  }
 
   if (isLoading) {
     return (
@@ -82,18 +90,18 @@ const singleProduct = () => {
       </div>
       <div className="px-10">
         <div className="my-10">
-          {/* <Link
-            href={"/products"}
-            className="bg-[#0F0F0F] flex items-center gap-2 px-3 py-2 rounded-md w-fit"
-          >
-            <MdOutlineKeyboardBackspace />
-            Back
-          </Link> */}
-          <Link href={"/products"} className=" w-fit px-3 py-1 rounded-sm btn">
+          {/* <Link href={"/products"} className=" w-fit px-3 py-1 rounded-sm btn">
             <div className="flex items-center gap-2">
               <MdOutlineKeyboardBackspace />
               <button>Back</button>
             </div>
+          </Link> */}
+          <Link
+            href={"/products"}
+            className="flex items-center gap-2 w-fit px-3 py-1 rounded-sm btn"
+          >
+            <MdOutlineKeyboardBackspace />
+            Back
           </Link>
         </div>
         <div className="flex gap-5 flex-col md:flex-row">

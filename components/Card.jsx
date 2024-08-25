@@ -3,13 +3,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import CryptoJS from "crypto-js";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 
 const Card = ({ product }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { id, title, description, price, rating, stock, thumbnail, images } =
     product;
+  const encryptedId = CryptoJS.AES.encrypt(id.toString() , process.env.NEXT_PUBLIC_SECRET_KEY).toString()
+  // URL-safe encode the encrypted data
+  const urlSafeEncoded = btoa(encryptedId).replace(/\+/g, '-').replace(/\//g, '_');
   return (
     <motion.div
       className="mt-5 w-[32.5%] min-w-[300px] h-[470px] rounded-lg overflow-hidden bg-[#444444] flex flex-col"
@@ -26,11 +30,11 @@ const Card = ({ product }) => {
         />
       </div>
       <div className="pt-10 px-5 flex-1">
-        <Link href={`/products/${id}`}>
-          <h2 className="text-3xl">
+        <Link href={`/products/${urlSafeEncoded}`} className="flex flex-col">
+          <span className="text-white text-3xl">
             {title.length > 15 ? `${title.substr(0, 15)}...` : title}
-          </h2>
-          <p className="text-sm/6 mt-3 font-medium">
+          </span>
+          <p className="text-white text-sm/6 mt-3 font-medium">
             {description.length > 50
               ? `${description.substr(0, 50)}...`
               : description}
